@@ -184,7 +184,7 @@ const matchingExpression = '(?<name>[Rule][Rule][Rule])?'
 
 #### Expected number of occurrences
 
-Similar to regexp, we've got three ways to describe expected number of occurrences:
+Similar to regexp, we've got four ways to describe expected number of occurrences:
 
 ##### At least N objects
 
