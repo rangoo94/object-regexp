@@ -469,5 +469,6 @@ const match = compile(expression, null, false)
 
 ## Changelog
 
+- **1.1.0** - fix problem with "Many Lazy" and "Any Lazy", add documentation to processing function
 - **1.0.2** - add information about `Exact amount` quantifier
 - **1.0.1** - small fixes for README file
