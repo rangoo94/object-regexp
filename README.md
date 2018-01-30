@@ -151,7 +151,7 @@ const input = [ { type: 'Rule', data: { value: 'regexp' } } ]
 
 const expression1 = '[Rule]|[Rule2]' // will match object which is `Rule` or `Rule2`
 const expression2 = '[Rule]|[Rule2][Rule3]' // will match either `[Rule]` or `[Rule2][Rule3]`
-const expression3 = '[Rule]|[^Rule4] // will firstly try to match `[Rule]`, otherwise `[^Rule4]`
+const expression3 = '[Rule]|[^Rule4]' // will firstly try to match `[Rule]`, otherwise `[^Rule4]`
 const expression4 = '[Rule]|[Rule2]|[^Rule4]' // you can nest them as well
 ```
 
@@ -401,7 +401,7 @@ const macros = [
     // You can use named groups, and apply them to result
     // Also, $0, $1, $2... works for captured groups
     from: '@(?<name>\\w+)'
-    to: '[AtRule=$name]
+    to: '[AtRule=$name]'
   },
   {
     // 'from' is regular expression,
@@ -457,3 +457,7 @@ const compile = require('object-regexp').compile
 const expression = '(?<spacing>[Space]+)[Literal]'
 const match = compile(expression, null, false)
 ```
+
+## Changelog
+
+- **1.0.1** - small fixes for README file
