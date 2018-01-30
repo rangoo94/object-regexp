@@ -173,7 +173,7 @@ const input = [ { type: 'Rule' }, { type: 'Rule' }, { type: 'Rule' } ]
 const matchingExpression = '([Rule][Rule][Rule])?' // optional will check for 3 objects
 ```
 
-Also, if you would like to get content from inside you can used named groups:
+Also, if you would like to get content from inside you can use named groups:
 
 ```js
 const input = [ { type: 'Rule' }, { type: 'Rule' }, { type: 'Rule' } ]
@@ -211,6 +211,15 @@ const input = [ { type: 'Rule' }, { type: 'Rule' }, { type: 'Rule' } ]
 
 // It will match between 2 and 5 objects, trying to catch as much as it can
 const matchingExpression = '[Rule]{2,5}'
+```
+
+##### Exact amount
+
+```js
+const input = [ { type: 'Rule' }, { type: 'Rule' }, { type: 'Rule' } ]
+
+// It will match only 3 objects, it's equivalent of [Rule][Rule][Rule]
+const matchingExpression = '[Rule]{3}'
 ```
 
 #### "Any" quantifier
@@ -460,4 +469,5 @@ const match = compile(expression, null, false)
 
 ## Changelog
 
+- **1.0.2** - add information about `Exact amount` quantifier
 - **1.0.1** - small fixes for README file
