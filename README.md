@@ -307,15 +307,31 @@ Format of success result:
 
 ```js
 const result = {
+  finished: true, // This expression is fully finished
   index: 0, // always 0 for now, as we always start on beginning
   length: 10, // number of objects which are matching this expression
+  expectations: [
+    // even succeeded expression can be continued,
+    // so sometimes you may want expectations to extend it
+    { head: 'group1', oneOf: [ { type: 'Space' }, { type: 'NewLine' } ] },
+    { head: null, notOneOf: [ { type: 'Space' }, { type: 'NewLine' } ] },
+    { head: 'blabla', any: true }
+  ],
   groups: {
     group1: { from: 0, to: 3 } // objects for named group `group1` found between 0 and 3 indexes
   }
 }
 ```
 
-Format of failed result:
+Format of failed result which **CAN'T** be continued:
+
+```js
+null
+```
+
+It's just always `null`.
+
+Format of failed result which **CAN** be continued with some objects:
 
 ```js
 const failedResult = {
@@ -384,6 +400,15 @@ It's mostly important if you will try to parse one by one, with some rules what 
 - `oneOf` is equivalent of missing `[Type]` rule
 - `notOneOf` is equivalent of missing `[^Type]` rule
 - `any: true` means that it can be any object
+
+Summing up, to check if expression has succeed, you have to check:
+
+```js
+// ...
+
+const result = match(objects)
+const succeed = result && result.finished
+```
 
 ### Macros
 
