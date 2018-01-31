@@ -473,6 +473,6 @@ const match = compile(expression, null, false)
 - **1.1.3** - optimize going between nodes while processing instruction (works up to 2x faster)
 - **1.1.2** - fix problems with `Nothing` rule
 - **1.1.1** - optimize simple instructions (works 2-3x faster)
-- **1.1.0** - fix problem with "Many Lazy" and "Any Lazy", add documentation to processing function
+- **1.1.0** - fix problem with `Many Lazy` and `Any Lazy`, add documentation to processing function
 - **1.0.2** - add information about `Exact amount` quantifier
 - **1.0.1** - small fixes for README file
