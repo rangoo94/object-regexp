@@ -494,6 +494,7 @@ const match = compile(expression, null, false)
 
 ## Changelog
 
+- **1.2.0** - return `expectations` even if expression succeed
 - **1.1.6** - fix critical problem with `Many Lazy` and `Any Lazy` formulas
 - **1.1.5** - fix critical problem with `Any Object` formula
 - **1.1.4** - just rebuild broken NPM package
