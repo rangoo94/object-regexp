@@ -469,6 +469,7 @@ const match = compile(expression, null, false)
 
 ## Changelog
 
+- **1.1.5** - fix critical problem with `Any Object` formula
 - **1.1.4** - just rebuild broken NPM package
 - **1.1.3** - optimize going between nodes while processing instruction (works up to 2x faster)
 - **1.1.2** - fix problems with `Nothing` rule
