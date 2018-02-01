@@ -539,6 +539,7 @@ const match = compile(expression, null, false)
 
 ## Changelog
 
+- **1.3.2** - optimize last atomic instructions (on the end of `Root` or `AtomicGroup`)
 - **1.3.1** - added end index sign (`$`)
 - **1.3.0** - add possessive quantifiers and atomic groups
 - **1.2.1** - add missing `universal-lexer` dependency
