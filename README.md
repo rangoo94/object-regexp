@@ -558,6 +558,7 @@ const match = compile(expression, null, false)
 
 ## Changelog
 
+- **1.3.4** - added `startIndex` parameter for processing functions
 - **1.3.3** - fix serialization function (add missing node types)
 - **1.3.2** - optimize last atomic instructions (on the end of `Root` or `AtomicGroup`)
 - **1.3.1** - added end index sign (`$`)
