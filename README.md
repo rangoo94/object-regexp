@@ -280,11 +280,41 @@ const input = [ { type: 'Rule' }, { type: 'Rule' }, { type: 'AnotherRule' } ]
 const matchingExpression = '[Rule]+?[AnotherRule]'
 ```
 
+#### Atomic groups
+
+If you would like regular expression to work faster, you can think about atomic groups (and possessive quantifiers).
+These groups, after will be finished will remove it's save points - you can't recover for them.
+
+See example:
+
+```js
+const rules = [ { type: 'A' }, { type: 'A' }, { type: 'A' } ]
+
+// It will get all A's to first quantifier ([A]+), but when it will try to get ending A,
+// it will recover to [A]+ with 2 elements (as no other A's left).
+// So, because of recovering, this expression will MATCH rules above.
+const matchingExpression = '[A]+[A]'
+
+// It will get all A's to first quantifier. It will satisfy atomic group,
+// but nothing will be left for ending [A], so expression will fail.
+const failingExpression = '(?>[A]+)[A])'
+```
+
+You can pass any number of sub-instructions to atomic groups.
+
+#### Possessive quantifiers
+
+There are simpler instructions for stuff like `(?>[A]+)`, which are possessive quantifiers.
+You can make `?`, `+`, `*` possessive, using `+` sign, in sequence: `?+`, `++`, `*+`.
+It will be equivalent of `(?>[A]?)`, `(?>[A]+)` and `(?>[A}*)`.
+
+Also, you can make it for `Amount at least`, `Amount at most` and `Amount between` quantifiers,
+just adding `+` sign after.
+
 #### Missing parts of syntax
 
 There are most important things for parsing, but still we are missing some features out of regular expressions:
 
-- Possessive quantifiers and atomic groups (i.e. `.*+`, `.?+`, `(?>something)`)
 - Matching beginning or end of list (`^` or `$` signs) - **right now it always matches from beginning (for performance reasons)**
 - Negative and positive lookaheads (`?!` and `?=`)
 
