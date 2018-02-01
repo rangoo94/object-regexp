@@ -317,6 +317,9 @@ In regular expressions there are common used `^` and `$` signs matching beginnin
 
 For performance reasons we don't have (yet?) starting index (`^`), but we have `$` sign.
 
+If you would like to search from different index (than beginning),
+look at **"Searching from different index than beginning"** chapter.
+
 Example:
 
 ```js
@@ -353,7 +356,7 @@ Format of success result:
 ```js
 const result = {
   finished: true, // This expression is fully finished
-  index: 0, // always 0 for now, as we always start on beginning
+  index: 0, // beginning index for searching
   length: 10, // number of objects which are matching this expression
   expectations: [
     // even succeeded expression can be continued,
@@ -520,6 +523,22 @@ const match = compile(expression, macros)
 const objects = [ { type: 'Space' }, { type: 'Space' } ]
 
 console.log(match(objects))
+```
+
+### Searching from different index than beginning
+
+You don't have to search from beginning of list, there is also `startIndex` parameter:
+
+```js
+const compile = require('object-regexp').compile
+
+const expression = '(?<spacing>[Space]+)[Literal]'
+const macros = [ /* ... */ ]
+const match = compile(expression, macros)
+
+const objects = [ { type: 'X' }, { type: 'Space' }, { type: 'Space' } ]
+
+console.log(match(objects, 1))
 ```
 
 ### Optimization parameter
