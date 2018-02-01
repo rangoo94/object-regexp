@@ -311,11 +311,26 @@ It will be equivalent of `(?>[A]?)`, `(?>[A]+)` and `(?>[A}*)`.
 Also, you can make it for `Amount at least`, `Amount at most` and `Amount between` quantifiers,
 just adding `+` sign after.
 
+#### Start and end index
+
+In regular expressions there are common used `^` and `$` signs matching beginning and end of string.
+
+For performance reasons we don't have (yet?) starting index (`^`), but we have `$` sign.
+
+Example:
+
+```js
+const rules = [ { type: 'A' }, { type: 'A' }, { type: 'A' } ]
+const matchingExpression = '[A][A]'
+const matchingExpression2 = '[A][A][A]$'
+const notMatchingExpression = '[A][A]$'
+```
+
 #### Missing parts of syntax
 
 There are most important things for parsing, but still we are missing some features out of regular expressions:
 
-- Matching beginning or end of list (`^` or `$` signs) - **right now it always matches from beginning (for performance reasons)**
+- Beginning index (`^`)
 - Negative and positive lookaheads (`?!` and `?=`)
 
 ### How to use it
