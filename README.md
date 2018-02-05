@@ -558,6 +558,7 @@ const match = compile(expression, null, false)
 
 ## Changelog
 
+- **1.3.6** - optimize a lot, mostly groups and possessive instructions
 - **1.3.5** - fix `walkBackEnd` traverser to always go from end
 - **1.3.4** - added `startIndex` parameter for processing functions
 - **1.3.3** - fix serialization function (add missing node types)
