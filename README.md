@@ -7,7 +7,7 @@ It handles syntax similar expressions to regexp, to search within array of objec
 Most important use case for this package is to use it in parsers,
 as it can help build syntax tree out of tokens, with simple and known syntax.
 
-Also, because of this case it is **very efficient, optimizations here are done on `0.00001ms` level (`1e-5ms` or `1e-2μs`)**.
+Also, because of this case it is **very efficient, result optimizations here are done even on `0.000001ms` level (`1e-6ms` or `1e-3μs`)**.
 Works best on newest V8 engines.
 
 ## Optimizations put into
@@ -338,17 +338,22 @@ There are most important things for parsing, but still we are missing some featu
 
 ### How to use it
 
-Most importantly `object-regexp` package is exporting `compile` method.
+Most importantly `object-regexp` package is exporting `compile` and `toCode` methods.
 
 ```js
 const compile = require('object-regexp').compile
+const toCode = require('object-regexp').toCode
 
 const expression = '[Space]+'
 const match = compile(expression)
 
 const objects = [ { type: 'Space' }, { type: 'Space' }, { type: 'Space' } ]
 
+// Match dynamic expressions
 console.log(match(objects))
+
+// Save standalone code of expression
+require('fs').writeFileSync('expression.js', 'module.exports = ' + toCode(expression))
 ```
 
 Format of success result:
@@ -361,15 +366,17 @@ const result = {
   expectations: [
     // even succeeded expression can be continued,
     // so sometimes you may want expectations to extend it
-    { head: 'group1', oneOf: [ { type: 'Space' }, { type: 'NewLine' } ] },
-    { head: null, notOneOf: [ { type: 'Space' }, { type: 'NewLine' } ] },
-    { head: 'blabla', any: true }
+    { type: 'oneOf' step: 1, options: [ { type: 'Space' }, { type: 'NewLine' } ] },
+    { type: 'notOneOf', step: 4, options: [ { type: 'Space' }, { type: 'NewLine' } ] },
+    { type: 'any', step: 10 }
   ],
   groups: {
     group1: { from: 0, to: 3 } // objects for named group `group1` found between 0 and 3 indexes
   }
 }
 ```
+
+When there is no way to continue this expression, `expectations` will be `null`.
 
 Format of failed result which **CAN'T** be continued:
 
@@ -383,10 +390,11 @@ Format of failed result which **CAN** be continued with some objects:
 
 ```js
 const failedResult = {
+  finished: false,
   expectations: [
-    { head: 'group1', oneOf: [ { type: 'Space' }, { type: 'NewLine' } ] },
-    { head: null, notOneOf: [ { type: 'Space' }, { type: 'NewLine' } ] },
-    { head: 'blabla', any: true }
+    { type: 'oneOf', step: 1, options: [ { type: 'Space' }, { type: 'NewLine' } ] },
+    { type: 'notOneOf', step: 5, options: [ { type: 'Space' }, { type: 'NewLine' } ] },
+    { type: 'any', step: 3 }
   ]
 }
 ```
@@ -411,8 +419,8 @@ console.log(match(objects))
 /*
 {
   expectations: [
-    { head: null, oneOf: [ { type: 'Space' } ] },
-    { head: null, oneOf: [ { type: 'Literal' } ] }
+    { type: 'oneOf', step: 3, options: [ { type: 'Space' } ] },
+    { type: 'oneOf', step: 4, options: [ { type: 'Literal' } ] }
   ]
 */
 ```
@@ -422,32 +430,11 @@ This engine assumes, that you may send something more to satisfy matcher.
 In this case, you can either send `Space` object (and later again `Space` or `Literal`)
 or `Literal` object to finish expression.
 
-If it goes about `head` property in expectations, it is just information in which named group this property is missing:
-
-```js
-const compile = require('object-regexp').compile
-
-const expression = '(?<spacing>[Space]+)[Literal]'
-const match = compile(expression)
-
-const objects = [ { type: 'Space' }, { type: 'Space' } ]
-
-console.log(match(objects))
-
-/*
-{
-  expectations: [
-    { head: 'spacing', oneOf: [ { type: 'Space' } ] },
-    { head: null, oneOf: [ { type: 'Literal' } ] }
-  ]
-*/
-```
-
 It's mostly important if you will try to parse one by one, with some rules what objects can be included in some place.
 
 - `oneOf` is equivalent of missing `[Type]` rule
 - `notOneOf` is equivalent of missing `[^Type]` rule
-- `any: true` means that it can be any object
+- `any` means that it can be any object
 
 Summing up, to check if expression has succeed, you have to check:
 
@@ -541,22 +528,30 @@ const objects = [ { type: 'X' }, { type: 'Space' }, { type: 'Space' } ]
 console.log(match(objects, 1))
 ```
 
-### Optimization parameter
+### Beautify code parameter
 
-By default this engine assumes that you will use your expressions often,
-so it compiles it slower, to make faster execution.
+By default there is no indentation preserved when you are generating your matching code.
 
-If you would like to switch off this rule (which actually slows down mostly when profiler is opened),
-you can pass third parameter to `compile` function:
+If you would like to beautify this code,
+you can pass third parameter to `toCode` function:
 
 ```js
-const compile = require('object-regexp').compile
+const toCode = require('object-regexp').toCode
 
 const expression = '(?<spacing>[Space]+)[Literal]'
-const match = compile(expression, null, false)
+const code = toCode(expression, null, false)
 ```
 
+**FOR BETTER PERFORMANCE DO NOT EDIT THESE FILES (UGLIFY AT MOST).
+EVEN REDUNDANT `ok = true` IS THERE TO MAKE IT FASTER.**
+
 ## Changelog
+
+### Version 2
+
+- **2.0.0** - inline all instructions, add optimizations (2-100x faster than v1), write tests
+
+### Version 1
 
 - **1.3.6** - optimize a lot, mostly groups and possessive instructions
 - **1.3.5** - fix `walkBackEnd` traverser to always go from end
