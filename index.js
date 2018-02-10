@@ -1,7 +1,9 @@
 const compile = require('./lib/compileExpression')
-const toSyntaxTree = require('./lib/parser/parseExpressionToSyntaxTree')
+const toCode = require('./lib/buildMatcherCode')
+const applyMacros = require('./lib/parser/applyMacros')
 const serialize = require('./lib/parser/serializeExpression')
 
 exports.compile = compile
-exports.toSyntaxTree = toSyntaxTree
-exports.serializeSyntaxTree = serialize
+exports.toCode = toCode
+exports.applyMacros = applyMacros
+exports.serialize = serialize

@@ -19,7 +19,9 @@
   "main": "index.js",
   "scripts": {
     "prepublish": "rollup -c rollup.config.js",
-    "test": "standard"
+    "lint": "eslint ./lib",
+    "test": "mocha ./tests/**/*Spec.js",
+    "coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- ./tests/**/*Spec.js && cat ./coverage/lcov.info | ./node_modules/.bin/codeclimate-test-reporter"
   },
   "author": "Dawid Rusnak <dawid@drcode.pl>",
   "repository": {
@@ -31,6 +33,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "js-beautify": "^1.7.5",
     "named-js-regexp": "^1.3.3",
     "universal-lexer": "^1.0.8"
   },
@@ -39,11 +42,20 @@
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-preset-env": "^1.6.1",
     "babelrc-rollup": "^3.0.0",
+    "coveralls": "^3.0.0",
+    "eslint": "^4.17.0",
+    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^6.0.0",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "expect.js": "^0.3.1",
+    "istanbul": "^0.4.5",
+    "mocha": "^5.0.0",
     "rollup": "^0.54.0",
     "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.2",
-    "rollup-plugin-uglify": "^2.0.1",
-    "standard": "^10.0.3"
+    "rollup-plugin-uglify": "^2.0.1"
   }
 }
