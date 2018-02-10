@@ -33,8 +33,8 @@ As this library is working in such speed, there is a lot of optimizations put in
 
 ## How to install
 
-Package is available as `universal-lexer` in NPM, so you can use it in your project using
-`npm install universal-lexer` or `yarn add universal-lexer`
+Package is available as `object-regexp` in NPM, so you can use it in your project using
+`npm install object-regexp` or `yarn add object-regexp`
 
 ## What are requirements?
 
