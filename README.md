@@ -544,11 +544,13 @@ you can pass third parameter to `toCode` function:
 const toCode = require('object-regexp').toCode
 
 const expression = '(?<spacing>[Space]+)[Literal]'
-const code = toCode(expression, null, false)
+const code = toCode(expression, null, true)
 ```
 
-**FOR BETTER PERFORMANCE DO NOT EDIT THESE FILES (UGLIFY AT MOST).
-EVEN REDUNDANT `ok = true` IS THERE TO MAKE IT FASTER.**
+> **Remember:**
+>
+> FOR BETTER PERFORMANCE DO NOT EDIT THESE FILES (UGLIFY AT MOST).
+> EVEN REDUNDANT `ok = true` IS THERE TO MAKE IT FASTER.
 
 ## Changelog
 
