@@ -1,5 +1,10 @@
 # Regular Expressions for Objects
 
+[![Travis](https://travis-ci.org/rangoo94/object-regexp.svg)](https://travis-ci.org/rangoo94/object-regexp)
+[![Code Climate](https://codeclimate.com/github/rangoo94/object-regexp/badges/gpa.svg)](https://codeclimate.com/github/rangoo94/object-regexp)
+[![Coverage Status](https://coveralls.io/repos/github/rangoo94/object-regexp/badge.svg?branch=master)](https://coveralls.io/github/rangoo94/object-regexp?branch=master)
+[![NPM Downloads](https://img.shields.io/npm/dm/object-regexp.svg)](https://www.npmjs.com/package/object-regexp)
+
 It handles syntax similar expressions to regexp, to search within array of objects.
 
 ## What is it useful for?
